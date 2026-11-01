@@ -64,12 +64,16 @@ Then **wait for their answer before launching work for the new framing.** Refram
 
 ## 4. Keep work from snowballing
 
-Before launching anything beyond what was agreed, list it first:
+**Experiment plan gate.** Before launching any training run or background job, show the plan and wait for an explicit yes. Listing it and starting anyway doesn't count. The plan is short:
 
-| 想跑的 | 目的（回答哪個問題） | 成本（GPU / 時間） |
-|---|---|---|
+| 想跑的 | 目的（回答哪個問題） | 預期結果會讓我們怎麼做 | 成本（GPU / 時間） |
+|---|---|---|---|
 
-…and ask, unless the user already approved that kind of follow-up. Things that need a yes:
+The "預期結果會讓我們怎麼做" column matters: if no plausible result would change the next decision, the experiment probably isn't worth running. Say so.
+
+A yes covers the plan as shown, not follow-ups it inspires. Count runs against the agreed budget, including failed and crashed ones. When the budget is used up, stop and report; extending it is the researcher's call.
+
+Beyond training jobs, these also need a yes:
 - new training runs or anything with significant GPU time
 - more than one or two follow-up jobs at once
 - new tools or scripts for a side question
@@ -86,7 +90,8 @@ Set a budget before debugging or exploring ("我先試兩個可能，都不是�
 
 - Only say "說明 / 證明 / 是因為" when an experiment isolated the cause. Otherwise: "我的推測是…（還沒驗證）".
 - **Comparisons against another paper or method**: before ranking, list what differs — eval set and size, preprocessing, VAE/backbone, number of samples, metric implementation. If something that could explain the gap isn't controlled, say so next to the number, not three paragraphs later.
-- **Noise**: is the difference bigger than run-to-run or seed variance? Small differences from one run are hints, not findings.
+- **Measure the noise floor first.** Before comparing variants, know how much the metric moves with nothing changed: re-run eval with a few seeds, or re-evaluate the same checkpoint with different sampling. Record the floor in the notes (e.g. "NIQE ±0.03, FID ±0.3 on this eval set"). A difference inside the floor is "no detectable difference", not a win or a loss. If the floor isn't known yet, say so next to the comparison.
+- **Keep the eval fixed.** A comparison only holds within one eval definition: same test set and size, preprocessing, decoder/backbone, metric implementation. When any of these change, start a new comparison block in the notes and don't put old and new numbers in the same table without marking which is which.
 - **ML/CV hygiene before trusting a result**: same setting as the baseline; no train/test leakage; correct metric implementation; actually look at a few outputs (successes and failures).
 
 ## 6. Ask back — early and cheaply
@@ -110,10 +115,30 @@ A short anchor file at the project root. If it doesn't exist, offer to create it
 <one question that has an answer; changes only with the researcher's agreement>
 ## Decisions (newest first)
 - YYYY-MM-DD — <decision> — because <reason>
+## Eval setup & noise floor
+- <eval set, size, metric implementation> — floor: <metric ±x> (measured YYYY-MM-DD)
 ## Names
-- <label> = <what it actually is: model, schedule, loss, step count>
+- <label> = <what it actually is: model, schedule, loss, step count> → see log entry <id>
 ## Open questions
 ## Parked ideas
 ```
 
 Update it when a decision is made, the question changes, a name is introduced, or something is parked; mention the update in one line.
+
+**Read before acting.** At the start of a session, or when resuming after a break, read `RESEARCH_NOTES.md` and the last few entries of `EXPERIMENT_LOG.md` before doing anything else.
+
+## 8. EXPERIMENT_LOG.md
+
+Every run whose result you report gets one entry, so any number can be traced back to how it was produced, and every label has a definition. Append-only, newest at the bottom:
+
+```markdown
+## <id, e.g. E017> — YYYY-MM-DD — <one-line purpose: which question it answers>
+- what: <plain description of the variant; the label if any>
+- command: `<exact command>`
+- commit: <git hash> (+ uncommitted changes? yes/no)
+- outputs: <paths to results/checkpoints>
+- result: <key numbers, vs. which baseline entry>
+- status: done / failed (<why>) / running
+```
+
+Log failed and abandoned runs too, with one line on why. A dead end that isn't written down gets tried again. When reporting a number, cite its entry ("E017") so the researcher can look it up. If the project already has its own experiment tracking (W&B, MLflow, a lab notebook), use that instead and link to it, rather than keeping a second log.
