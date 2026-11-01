@@ -1,0 +1,3 @@
+GPU0  A (r2perc)  S1 8k done 10:20 UTC; S2 3k nearly done; then bench + dmpcopy; ETA 12:30 UTC
+GPU1  B (r2cd4)   S1 8k done 10:55 UTC; S2 at 9.2k; ETA 13:40 UTC
+GPU2  per-stage FID + decoder round-trip floor + DIV2K pixel-noise IQA/FID; ETA ~25 min

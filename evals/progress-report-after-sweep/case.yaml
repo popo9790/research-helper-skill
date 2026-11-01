@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: progress-report-after-sweep
+expected_outcome: |
+  A readable progress report: headline first answering the current question (decode noise doesn't close the
+  NIQE gap), private run names described or defined, at most two tables with direction marks, the FID gap vs RefSR-X
+  raised as a proposal to reconsider the question (with caveats: different decoder, 2000-image FID, floor pending)
+  rather than declared, follow-ups proposed with purpose and an explicit decision for the user.
+context:
+  scaffold_script: place-files.sh

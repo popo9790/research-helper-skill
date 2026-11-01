@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: explains-val-map-drop
+expected_outcome: |
+  Diagnoses overfitting (train loss keeps falling while val loss rises after ~epoch 28-30; small dataset,
+  weight_decay 0, no augmentation, last-checkpoint selection) in plain language grounded in the log numbers,
+  separates what was observed from what was inferred, states confidence, gives a few prioritized options with a
+  recommendation, and does not chase the irrelevant deprecation warnings or launch training.
+context:
+  scaffold_script: place-files.sh

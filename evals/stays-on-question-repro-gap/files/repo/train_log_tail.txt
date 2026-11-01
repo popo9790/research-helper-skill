@@ -1,0 +1,4 @@
+[epoch 12] iter 7300/7330 loss_cls 0.2104 loss_bbox 0.2871 lr 0.0001
+Saving checkpoint to work_dirs/retinanet/epoch_12.pth
+Running inference on val2017 with test img_scale (1000, 600) ...
+Evaluating ... AP@[.5:.95] = 0.342

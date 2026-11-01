@@ -1,0 +1,21 @@
+model: faster_rcnn_r50_fpn
+dataset:
+  name: factory_defects
+  train_images: 1840
+  val_images: 410
+  num_classes: 6
+train:
+  epochs: 60
+  batch_size: 8
+  optimizer: SGD
+  lr: 0.02
+  momentum: 0.9
+  weight_decay: 0.0
+  lr_schedule: step
+  lr_steps: [40]
+  checkpoint_selection: last
+augmentation:
+  horizontal_flip: false
+  random_resize: false
+  color_jitter: false
+pretrained_backbone: imagenet

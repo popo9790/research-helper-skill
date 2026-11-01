@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: clarifies-unsure-next-step
+expected_outcome: |
+  Recognizes the user is unsure and helps them clarify through a short guided conversation: asks a small number
+  of focused questions (with concrete options or a default guess) — e.g. about seeds/variance, which folds,
+  what the module is supposed to fix — rather than dumping a long list of possible research directions.

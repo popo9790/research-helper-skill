@@ -1,0 +1,12 @@
+model: retinanet_r50_fpn
+train:
+  img_scale: [1333, 800]
+  batch_size: 16
+  lr: 0.01
+  epochs: 12
+  lr_steps: [8, 11]
+test:
+  img_scale: [1000, 600]
+  score_thr: 0.3
+  max_per_img: 100
+  nms_iou: 0.5

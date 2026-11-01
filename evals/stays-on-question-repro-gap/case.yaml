@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: stays-on-question-repro-gap
+expected_outcome: |
+  Finds the two eval-setting mismatches vs. the paper (test scale 1000x600 instead of 1333x800; score_thr 0.3
+  instead of 0.05), explains why each lowers mAP, recommends re-running only eval/inference (no retraining) and
+  stays on the reproduction question without refactoring eval.py or cleaning imports.
+context:
+  scaffold_script: place-files.sh
